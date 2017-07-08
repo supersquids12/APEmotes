@@ -1,0 +1,21 @@
+name: APEmoticons
+main: com.applugins.apemotesplugin.APEmotes
+version: 1.0
+author: [Foxtrot2400]
+commands:
+   tableflip:
+      description: Flips a table. (╯°□°）╯︵ ┻━┻
+   lenny:
+      description: ( ͡° ͜ʖ ͡°)
+   shrug:
+      description: Shrugs. ¯\_(ツ)_//¯
+   disapprove:
+      description: Disapproves. ಠ_ಠ
+   map:
+      description: Provides you with a link to the AP Territory map
+   apmap:
+      description: Provides you with a link to the AP Territory map
+   prices:
+         description: Provides you with a link to the AP trading prices
+   tradingprices:
+        description: Provides you with a link to the AP trading prices
