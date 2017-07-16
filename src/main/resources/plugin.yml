@@ -1,6 +1,6 @@
 name: APEmoticons
 main: com.applugins.apemotesplugin.APEmotes
-version: ${project.version}
+version: 1.0
 author: [Foxtrot2400]
 commands:
    tableflip:
@@ -16,6 +16,12 @@ commands:
    apmap:
       description: Provides you with a link to the AP Territory map
    prices:
-         description: Provides you with a link to the AP trading prices
+      description: Provides you with a link to the AP trading prices
    tradingprices:
-        description: Provides you with a link to the AP trading prices
+      description: Provides you with a link to the AP trading prices
+   emotes:
+      description: General add, remove, and reload emotes command
+     # usage: /emotes (add :emote: ASCII/remove :emote:/reload)
+permissions:
+   emote.edit:
+      default: op
