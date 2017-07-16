@@ -1,28 +1,20 @@
 package apdevteam.APEmotes;
 
-import com.sun.xml.internal.fastinfoset.util.FixedEntryStringIntMap;
-import jdk.nashorn.internal.runtime.regexp.joni.Config;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Event;
-import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.*;
-import java.util.HashMap;
-//import org.bukkit.event.Listener;
-import java.util.*;
-import org.bukkit.command.*;
-import org.bukkit.event.*;
-import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.event.player.PlayerChatTabCompleteEvent;
-//import org.bukkit.event.server.onTabCompleteEvent;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.server.TabCompleteEvent;
+import org.bukkit.plugin.java.JavaPlugin;
+
+import java.util.HashMap;
+import java.util.Map;
+
 
 
 
