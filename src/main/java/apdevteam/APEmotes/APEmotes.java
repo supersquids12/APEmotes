@@ -200,7 +200,7 @@ public class APEmotes extends JavaPlugin implements Listener {
         for (Map.Entry<String,String> entry : emoteMap.entrySet()) {
             int emoteIndex = event.getBuffer().lastIndexOf(entry.getKey().substring(0, 1));
             if(emoteIndex >= 0 && entry.getKey().startsWith(event.getBuffer().substring(emoteIndex)))
-                tabCompletions.add(entry.getValue());
+                tabCompletions.add(entry.getKey());
         }
         event.setCompletions(tabCompletions);
     }
