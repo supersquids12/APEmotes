@@ -1,5 +1,5 @@
 name: APEmoticons
-main: com.applugins.apemotesplugin.APEmotes
+main: apdevteam.APEmotes.APEmotes
 version: 1.0
 author: [Foxtrot2400]
 commands:

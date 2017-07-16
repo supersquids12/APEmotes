@@ -12,6 +12,7 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.server.TabCompleteEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -195,11 +196,13 @@ public class APEmotes extends JavaPlugin implements Listener {
 
     @EventHandler
     public void onTabCompleteEvent(TabCompleteEvent event){
+        ArrayList<String> tabCompletions = new ArrayList<>(event.getCompletions());
         for (Map.Entry<String,String> entry : emoteMap.entrySet()) {
-            int emoteIndex = event.getBuffer().lastIndexOf(entry.getKey().charAt(0));
-            if(emoteIndex > 0 && entry.getKey().startsWith(event.getBuffer().substring(emoteIndex)))
-                event.getCompletions().add(entry.getValue());
+            int emoteIndex = event.getBuffer().lastIndexOf(entry.getKey().substring(0, 1));
+            if(emoteIndex >= 0 && entry.getKey().startsWith(event.getBuffer().substring(emoteIndex)))
+                tabCompletions.add(entry.getValue());
         }
+        event.setCompletions(tabCompletions);
     }
 }
 
