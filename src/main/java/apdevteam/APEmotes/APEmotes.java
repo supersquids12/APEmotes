@@ -59,13 +59,13 @@ public class APEmotes extends JavaPlugin implements Listener {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        Player player = (Player) sender;
+        //Player player = (Player) sender;
         if (command.getName().equalsIgnoreCase("emotes")) {
             if (args.length == 0) {
-                player.sendMessage("Please type in a command!");
+                sender.sendMessage("Please type in a command!");
             } else if (args.length > 0) {
                 if (args[0].equalsIgnoreCase("add")) {
-                    if (player.hasPermission("emote.edit")) {
+                    if (sender.hasPermission("emote.edit")) {
 
                         //if(command.getName().equalsIgnoreCase("add"))
                         //{
@@ -83,7 +83,7 @@ public class APEmotes extends JavaPlugin implements Listener {
                         }
                         //config.addDefaults(emoteMap);
                         getLogger().info("arg 1: " + args[1] + " arg 2: " + args[2]);
-                        player.sendMessage(" Added emote " + args[1] + " with text " + args[2]);
+                        sender.sendMessage(" Added emote " + args[1] + " with text " + args[2]);
                         config.options().copyDefaults(true);
 
                         this.saveConfig();
@@ -92,22 +92,22 @@ public class APEmotes extends JavaPlugin implements Listener {
                         //this.getConfig().set("")
                         //emoteMap = (HashMap<String,String>)config.getValues(false);
                     } else {
-                        player.sendMessage(ChatColor.GREEN + "[Emotes]" + ChatColor.RED + " Insufficient permissions.");
+                        sender.sendMessage(ChatColor.GREEN + "[Emotes]" + ChatColor.RED + " Insufficient permissions.");
                         return true;
                     }
                 } else if (args[0].equalsIgnoreCase("remove")) {
-                    if (player.hasPermission("emote.edit")) {
-                        player.sendMessage("Still being implemented.");
+                    if (sender.hasPermission("emote.edit")) {
+                        sender.sendMessage("Still being implemented.");
                         //this.EmoteWords.remove(args[1].toLowerCase());
                         //this.getConfig().set("WordBlacklist", this.EmoteWords);
                         //this.saveConfig();
                         return true;
                     } else {
-                        player.sendMessage(ChatColor.GREEN + "[Emotes]" + ChatColor.RED + " Insufficient permissions.");
+                        sender.sendMessage(ChatColor.GREEN + "[Emotes]" + ChatColor.RED + " Insufficient permissions.");
                         return true;
                     }
                 } else if (args[0].equalsIgnoreCase("reload")) {
-                    if (player.hasPermission("emote.edit")) {
+                    if (sender.hasPermission("emote.edit")) {
                         this.reloadConfig();
                         this.saveConfig();
                         this.getConfig().options().copyDefaults(true);
@@ -116,71 +116,52 @@ public class APEmotes extends JavaPlugin implements Listener {
                             getConfig().set(entry.getKey(), entry.getValue());
                         }
                         //this.EmoteWords = (List<String>) this.getConfig().getList("EmoteWords");
-                        player.sendMessage(ChatColor.GREEN + "[Emotes]" + ChatColor.YELLOW + " Configuration reloaded.");
+                        sender.sendMessage(ChatColor.GREEN + "[Emotes]" + ChatColor.YELLOW + " Configuration reloaded.");
                         return true;
                     } else {
-                        player.sendMessage(ChatColor.GREEN + "[Emotes]" + ChatColor.RED + " Insufficient permissions.");
+                        sender.sendMessage(ChatColor.GREEN + "[Emotes]" + ChatColor.RED + " Insufficient permissions.");
                         return true;
                     }
                 }
             } else {
-                player.sendMessage(ChatColor.GREEN + "[Emotes]" + ChatColor.RED + " Invalid command.");
+                sender.sendMessage(ChatColor.GREEN + "[Emotes]" + ChatColor.RED + " Invalid command.");
                 return true;
             }
 
         }
 
-        if (sender instanceof Player) {
-            player = (Player) sender;
-        } else sender.sendMessage("You can't use this command without being player");
-        if (command.getName().equalsIgnoreCase("tableflip")) {
-            if (!(sender instanceof Player)) {
-                sender.sendMessage("error");
-                return true;
-            }
-            Player cplayer = (Player) sender;
-            cplayer.chat("(╯°□°）╯︵ ┻━┻");
-        }
-        if (command.getName().equalsIgnoreCase("lenny")) {
-            if (!(sender instanceof Player)) {
-                sender.sendMessage("error");
-                return true;
-            }
-            Player cplayer = (Player) sender;
-            cplayer.chat("( ͡° ͜ʖ ͡°)");
-        }
-        if (command.getName().equalsIgnoreCase("shrug")) {
-            if (!(sender instanceof Player)) {
-                sender.sendMessage("error");
-                return true;
-            }
-            Player cplayer = (Player) sender;
-            String shrug = "¯\\_(ツ)_/¯";
-            cplayer.chat(shrug);
-        }
-        if (command.getName().equalsIgnoreCase("disapprove")) {
-            if (!(sender instanceof Player)) {
-                sender.sendMessage("error");
-                return true;
-            }
-            Player cplayer = (Player) sender;
-            cplayer.chat("ಠ_ಠ");
-        }
         if (command.getName().equalsIgnoreCase("map") || command.getName().equalsIgnoreCase("apmap")) {
-            if (!(sender instanceof Player)) {
-                sender.sendMessage("error");
-                return true;
-            }
             sender.sendMessage("AP Map Link: http://bit.ly/2uznccX");
+            return true;
         }
         if (command.getName().equalsIgnoreCase("prices") || command.getName().equalsIgnoreCase("tradingprices")) {
-            if (!(sender instanceof Player)) {
-                sender.sendMessage("error");
-                return true;
-            }
             sender.sendMessage("AP Trading Prices Link: http://bit.ly/2hDWHyu");
+            return true;
         }
-        return super.onCommand(sender, command, label, args);
+
+        if (!(sender instanceof Player)){
+            sender.sendMessage("You can't use this command without being player");
+            return true;
+        }
+        Player player = (Player)sender;
+        if (command.getName().equalsIgnoreCase("tableflip")) {
+            player.chat("(╯°□°）╯︵ ┻━┻");
+            return true;
+        }
+        if (command.getName().equalsIgnoreCase("lenny")) {
+            player.chat("( ͡° ͜ʖ ͡°)");
+            return true;
+        }
+        if (command.getName().equalsIgnoreCase("shrug")) {
+            player.chat("¯\\_(ツ)_/¯");
+            return true;
+        }
+        if (command.getName().equalsIgnoreCase("disapprove")) {
+            player.chat("ಠ_ಠ");
+            return true;
+        }
+
+        return false;
     }
 
     @EventHandler
