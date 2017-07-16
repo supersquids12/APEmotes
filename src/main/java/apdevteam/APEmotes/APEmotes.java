@@ -28,7 +28,7 @@ public class APEmotes extends JavaPlugin implements Listener {
 
     @Override
     public void onEnable() {
-        System.out.println("Enabling emoticons ( ͡° ͜ʖ ͡°)");
+        getLogger().info("Enabling emoticons ( ͡° ͜ʖ ͡°)");
         Bukkit.getServer().getPluginManager().registerEvents(this, this);
         this.getConfig().options().copyDefaults(true);
         //  this.EmoteWords = (List<String>) this.getConfig().getList("EmoteWords");
@@ -49,7 +49,7 @@ public class APEmotes extends JavaPlugin implements Listener {
 
     @Override
     public void onDisable() {
-        System.out.println("Disabling Emoticons (╯°□°）╯︵ ┻━┻");
+        getLogger().info("Disabling Emoticons (╯°□°）╯︵ ┻━┻");
         for (Map.Entry<String, String> entry : emoteMap.entrySet()) {
             //  FileConfiguration config = this.getConfig();
             getConfig().set(entry.getKey(), entry.getValue());
