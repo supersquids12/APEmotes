@@ -1,4 +1,4 @@
-package com.applugins.apemotesplugin;
+package apdevteam.APEmotes;
 
 import com.sun.xml.internal.fastinfoset.util.FixedEntryStringIntMap;
 import jdk.nashorn.internal.runtime.regexp.joni.Config;
@@ -25,7 +25,7 @@ import org.bukkit.event.player.PlayerChatTabCompleteEvent;
 import org.bukkit.event.server.TabCompleteEvent;
 
 
-import javax.annotation.RegEx;
+
 
 /**
  * Created by Foxtrot2400 on 7/6/17.
