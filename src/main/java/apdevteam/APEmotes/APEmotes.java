@@ -1,6 +1,7 @@
 package apdevteam.APEmotes;
 
-import org.bukkit.Bukkit;
+import apdevteam.APEmotes.tabCompletors.PlayerTabComplete;
+import apdevteam.APEmotes.tabCompletors.TabComplete;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -9,10 +10,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
-import org.bukkit.event.server.TabCompleteEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,7 +29,12 @@ public class APEmotes extends JavaPlugin implements Listener {
     @Override
     public void onEnable() {
         getLogger().info("Enabling emoticons ( ͡° ͜ʖ ͡°)");
-        Bukkit.getServer().getPluginManager().registerEvents(this, this);
+        getServer().getPluginManager().registerEvents(this, this);
+        if(getServer().getVersion().contains("1.9"))
+            getServer().getPluginManager().registerEvents(new PlayerTabComplete(this), this);
+        else
+            getServer().getPluginManager().registerEvents(new TabComplete(this), this);
+
         this.getConfig().options().copyDefaults(true);
         //  this.EmoteWords = (List<String>) this.getConfig().getList("EmoteWords");
         FileConfiguration config = this.getConfig();
@@ -194,15 +198,8 @@ public class APEmotes extends JavaPlugin implements Listener {
         }
     }
 
-    @EventHandler
-    public void onTabCompleteEvent(TabCompleteEvent event){
-        ArrayList<String> tabCompletions = new ArrayList<>(event.getCompletions());
-        for (Map.Entry<String,String> entry : emoteMap.entrySet()) {
-            int emoteIndex = event.getBuffer().lastIndexOf(entry.getKey().substring(0, 1));
-            if(emoteIndex >= 0 && entry.getKey().startsWith(event.getBuffer().substring(emoteIndex)))
-                tabCompletions.add(entry.getKey());
-        }
-        event.setCompletions(tabCompletions);
+    public HashMap<String, String> getEmoteMap(){
+        return emoteMap;
     }
 }
 
