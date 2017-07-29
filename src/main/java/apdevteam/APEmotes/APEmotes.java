@@ -68,71 +68,55 @@ public class APEmotes extends JavaPlugin implements Listener {
         if (command.getName().equalsIgnoreCase("emotes")) {
             if (args.length == 0) {
                 sender.sendMessage("Please type in a command!");
-            } else if (args.length > 0) {
-                if (args[0].equalsIgnoreCase("add")) {
-                    if (sender.hasPermission("emote.edit")) {
-
-                        //if(command.getName().equalsIgnoreCase("add"))
-                        //{
-                        getConfig().createSection(args[0].toLowerCase());
-                        //ConfigurationSection cs = getConfig().getConfigurationSection(args[0].toLowerCase());
-                        //cs.set("emote", )
-
-                        // HashMap<String,String> emoteMap = new HashMap<>();
-
-                        FileConfiguration config = this.getConfig();
-                        //emoteMap = new HashMap(config.getValues(false));
-                        emoteMap.put(args[1], args[2]);
-                        for (Map.Entry<String, String> entry : emoteMap.entrySet()) {
-                            config.addDefault(entry.getKey(), entry.getValue());
-                        }
-                        //config.addDefaults(emoteMap);
-                        getLogger().info("arg 1: " + args[1] + " arg 2: " + args[2]);
-                        sender.sendMessage(" Added emote " + args[1] + " with text " + args[2]);
-                        config.options().copyDefaults(true);
-
-                        this.saveConfig();
-
-
-                        //this.getConfig().set("")
-                        //emoteMap = (HashMap<String,String>)config.getValues(false);
-                    } else {
-                        sender.sendMessage(ChatColor.GREEN + "[Emotes]" + ChatColor.RED + " Insufficient permissions.");
-                        return true;
-                    }
-                } else if (args[0].equalsIgnoreCase("remove")) {
-                    if (sender.hasPermission("emote.edit")) {
-                        sender.sendMessage("Still being implemented.");
-                        //this.EmoteWords.remove(args[1].toLowerCase());
-                        //this.getConfig().set("WordBlacklist", this.EmoteWords);
-                        //this.saveConfig();
-                        return true;
-                    } else {
-                        sender.sendMessage(ChatColor.GREEN + "[Emotes]" + ChatColor.RED + " Insufficient permissions.");
-                        return true;
-                    }
-                } else if (args[0].equalsIgnoreCase("reload")) {
-                    if (sender.hasPermission("emote.edit")) {
-                        this.reloadConfig();
-                        this.saveConfig();
-                        this.getConfig().options().copyDefaults(true);
-                        for (Map.Entry<String, String> entry : emoteMap.entrySet()) {
-                            //  FileConfiguration config = this.getConfig();
-                            getConfig().set(entry.getKey(), entry.getValue());
-                        }
-                        //this.EmoteWords = (List<String>) this.getConfig().getList("EmoteWords");
-                        sender.sendMessage(ChatColor.GREEN + "[Emotes]" + ChatColor.YELLOW + " Configuration reloaded.");
-                        return true;
-                    } else {
-                        sender.sendMessage(ChatColor.GREEN + "[Emotes]" + ChatColor.RED + " Insufficient permissions.");
-                        return true;
-                    }
-                }
-            } else {
-                sender.sendMessage(ChatColor.GREEN + "[Emotes]" + ChatColor.RED + " Invalid command.");
                 return true;
             }
+            if (args[0].equalsIgnoreCase("add")) {
+                if (!sender.hasPermission("emote.edit")) {
+                    sender.sendMessage(ChatColor.GREEN + "[Emotes]" + ChatColor.RED + " Insufficient permissions.");
+                    return true;
+                }
+                getConfig().createSection(args[0].toLowerCase());
+//                FileConfiguration config = this.getConfig();
+                emoteMap.put(args[1], args[2]);
+//                for (Map.Entry<String, String> entry : emoteMap.entrySet()) {
+//                    config.addDefault(entry.getKey(), entry.getValue());
+//                }
+                getLogger().info("arg 1: " + args[1] + " arg 2: " + args[2]);
+                sender.sendMessage(" Added emote " + args[1] + " with text " + args[2]);
+//                config.options().copyDefaults(true);
 
+//                this.saveConfig();
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("remove")) {
+                if (!sender.hasPermission("emote.edit")) {
+                    sender.sendMessage(ChatColor.GREEN + "[Emotes]" + ChatColor.RED + " Insufficient permissions.");
+                    return true;
+                }
+                sender.sendMessage("Still being implemented.");
+                //this.EmoteWords.remove(args[1].toLowerCase());
+                //this.getConfig().set("WordBlacklist", this.EmoteWords);
+                //this.saveConfig();
+                return true;
+            }
+            if (args[0].equalsIgnoreCase("reload")) {
+                if (!sender.hasPermission("emote.edit")) {
+                    sender.sendMessage(ChatColor.GREEN + "[Emotes]" + ChatColor.RED + " Insufficient permissions.");
+                    return true;
+                }
+                this.reloadConfig();
+                this.saveConfig();
+                this.getConfig().options().copyDefaults(true);
+                for (Map.Entry<String, String> entry : emoteMap.entrySet()) {
+                    //  FileConfiguration config = this.getConfig();
+                    getConfig().set(entry.getKey(), entry.getValue());
+                }
+                //this.EmoteWords = (List<String>) this.getConfig().getList("EmoteWords");
+                sender.sendMessage(ChatColor.GREEN + "[Emotes]" + ChatColor.YELLOW + " Configuration reloaded.");
+                return true;
+            }
+            sender.sendMessage(ChatColor.GREEN + "[Emotes]" + ChatColor.RED + " Invalid command.");
+            return true;
         }
 
         if (command.getName().equalsIgnoreCase("map") || command.getName().equalsIgnoreCase("apmap")) {
