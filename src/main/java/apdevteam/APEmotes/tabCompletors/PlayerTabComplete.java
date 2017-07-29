@@ -5,8 +5,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerChatTabCompleteEvent;
 
-import java.util.Map;
-
 public class PlayerTabComplete implements Listener{
     private final APEmotes plugin;
     public PlayerTabComplete(APEmotes plugin){

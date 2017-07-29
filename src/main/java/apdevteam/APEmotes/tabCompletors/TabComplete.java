@@ -6,7 +6,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.server.TabCompleteEvent;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 public class TabComplete implements Listener{
     private final APEmotes plugin;
