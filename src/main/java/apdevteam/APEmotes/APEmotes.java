@@ -91,6 +91,10 @@ public class APEmotes extends JavaPlugin implements Listener {
                     sender.sendMessage(ChatColor.GREEN + "[Emotes]" + ChatColor.RED + " Insufficient permissions.");
                     return true;
                 }
+                if(args.length <2){
+                    sender.sendMessage(ChatColor.GREEN + "[Emotes]" + ChatColor.RED + " Improper format, use /emotes help.");
+                    return true;
+                }
                 getConfig().createSection(args[0].toLowerCase());
 //                FileConfiguration config = this.getConfig();
                 emoteMap.put(args[1], args[2]);
