@@ -72,8 +72,13 @@ public class APEmotes extends JavaPlugin implements Listener {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         //Player player = (Player) sender;
         if (command.getName().equalsIgnoreCase("emotes") || command.getName().equalsIgnoreCase("emote")) {
-            if (args.length == 0) {
-                sender.sendMessage("Please type in a command!");
+            if (args.length == 0 || args[0].equalsIgnoreCase("help")) {
+                sender.sendMessage("§e§l--- §r§6 Emote commands §e§l---");
+                sender.sendMessage("§6/emotes add <Key> <Result>§f: create a new emote");
+                sender.sendMessage("§6/emotes help§f: show this list");
+                sender.sendMessage("§6/emotes list <page>§f: list all emotes");
+                sender.sendMessage("§6/emotes reload§f: reload emotes from the config");
+                sender.sendMessage("§6/emotes remove <key>§f: remove an emote");
                 return true;
             }
             if (args[0].equalsIgnoreCase("add")) {
