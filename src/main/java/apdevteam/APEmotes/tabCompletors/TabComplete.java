@@ -9,14 +9,14 @@ import java.util.ArrayList;
 import java.util.Map;
 
 public class TabComplete implements Listener{
-    private Map<String, String > emoteMap;
+    private final APEmotes plugin;
     public TabComplete(APEmotes plugin){
-        emoteMap = plugin.getEmoteMap();
+        this.plugin=plugin;
     }
     @EventHandler
     public void onTabCompleteEvent(TabCompleteEvent event){
         ArrayList<String> tabCompletions = new ArrayList<>(event.getCompletions());
-        for (String emoteKey : emoteMap.keySet()) {
+        for (String emoteKey : plugin.getEmoteMap().keySet()) {
             int emoteIndex = event.getBuffer().lastIndexOf(":");
             if(emoteIndex >= 0 && (":" + emoteKey).startsWith(event.getBuffer().substring(emoteIndex)))
                 tabCompletions.add(":" + emoteKey + ":");
