@@ -135,6 +135,7 @@ public class APEmotes extends JavaPlugin implements Listener {
                 }
                 for (Map.Entry<String, String> entry : emoteMap.entrySet())
                     getConfig().set(entry.getKey(), entry.getValue());
+                saveConfig();
                 sender.sendMessage(ChatColor.GREEN + "[Emotes]" + ChatColor.YELLOW + " Configuration saved.");
                 return true;
             }
