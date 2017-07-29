@@ -2,16 +2,22 @@ package apdevteam.APEmotes;
 
 import apdevteam.APEmotes.tabCompletors.PlayerTabComplete;
 import apdevteam.APEmotes.tabCompletors.TabComplete;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
+import org.bukkit.command.CommandMap;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.PluginIdentifiableCommand;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -38,7 +44,10 @@ public class APEmotes extends JavaPlugin implements Listener {
         this.getConfig().options().copyDefaults(true);
         //  this.EmoteWords = (List<String>) this.getConfig().getList("EmoteWords");
         FileConfiguration config = this.getConfig();
-        emoteMap.put(":example:", "test");
+        emoteMap.put(":tableflip:", "(╯°□°）╯︵ ┻━┻");
+        emoteMap.put(":shrug:", "¯\\_(ツ)_/¯");
+        emoteMap.put(":lenny:", "( ͡° ͜ʖ ͡°)");
+        emoteMap.put(":disapprove:", "ಠ_ಠ");
         //HashMap<String,String> emoteMap = new HashMap<>();
         for (HashMap.Entry<String, String> entry : emoteMap.entrySet()) {
             config.addDefault(entry.getKey(), entry.getValue());
@@ -46,7 +55,7 @@ public class APEmotes extends JavaPlugin implements Listener {
         //config.addDefaults(emoteMap);
         config.options().copyDefaults(true);
         saveConfig();
-
+        loadCommands();
 
         //this.getConfig().set("")
         //emoteMap = (HashMap<String,String>)config.getValues(false);
@@ -127,64 +136,68 @@ public class APEmotes extends JavaPlugin implements Listener {
             sender.sendMessage("AP Trading Prices Link: http://bit.ly/2hDWHyu");
             return true;
         }
-
-        if (!(sender instanceof Player)){
-            sender.sendMessage("You can't use this command without being player");
-            return true;
-        }
-        Player player = (Player)sender;
-        if (command.getName().equalsIgnoreCase("tableflip")) {
-            player.chat("(╯°□°）╯︵ ┻━┻");
-            return true;
-        }
-        if (command.getName().equalsIgnoreCase("lenny")) {
-            player.chat("( ͡° ͜ʖ ͡°)");
-            return true;
-        }
-        if (command.getName().equalsIgnoreCase("shrug")) {
-            player.chat("¯\\_(ツ)_/¯");
-            return true;
-        }
-        if (command.getName().equalsIgnoreCase("disapprove")) {
-            player.chat("ಠ_ಠ");
-            return true;
-        }
-
         return false;
     }
 
     @EventHandler
-    public void onPlayerchat(AsyncPlayerChatEvent event) {
-        for (String word : event.getMessage().split(" ")) {
-            if (word.contains(":tableflip:")) {
-                String message = event.getMessage().replaceAll(":tableflip:", "(╯°□°）╯︵ ┻━┻");
-                event.setMessage(message);
-            }
-            if (word.contains(":shrug:")) {
-                String message = event.getMessage().replaceAll(":shrug:", "¯\\_(ツ)_/¯");
-                event.setMessage(message);
-            }
-            if (word.contains(":lenny:")) {
-                String message = event.getMessage().replaceAll(":lenny:", "( ͡° ͜ʖ ͡°)");
-                event.setMessage(message);
-            }
-            if (word.contains(":disapprove:")) {
-                String message = event.getMessage().replaceAll(":disapprove:", "ಠ_ಠ");
-                event.setMessage(message);
-            }
-            String tempMessage = event.getMessage();
-            for (Map.Entry<String, String> entry : emoteMap.entrySet()) {
-                tempMessage = tempMessage.replaceAll(entry.getKey(), entry.getValue());
-            }
-            event.setMessage(tempMessage);
-
-
+    public void onPlayerChat(AsyncPlayerChatEvent event) {
+        String tempMessage = event.getMessage();
+        for (Map.Entry<String, String> entry : emoteMap.entrySet()) {
+            tempMessage = tempMessage.replaceAll(entry.getKey(), entry.getValue());
         }
+        event.setMessage(tempMessage);
     }
 
     public HashMap<String, String> getEmoteMap(){
         return emoteMap;
     }
+
+    private void loadCommands(){
+        try {
+            final Field bukkitCommandMap = Bukkit.getServer().getClass().getDeclaredField("commandMap");
+
+            bukkitCommandMap.setAccessible(true);
+            CommandMap commandMap = (CommandMap) bukkitCommandMap.get(Bukkit.getServer());
+            for (String emote : emoteMap.keySet())
+                commandMap.register(emote, new EmoteCommand(emote));
+        } catch (IllegalAccessException | SecurityException | NoSuchFieldException | IllegalArgumentException e) {
+            e.printStackTrace();
+
+        }
+    }
+
+    private class EmoteCommand extends Command implements PluginIdentifiableCommand {
+
+        private EmoteCommand(String name) {
+            super(name);
+            this.description = "Sends the " + name + " emote in chat";
+            this.usageMessage = "/" + name;
+            this.setPermission("StaffMode." + name);
+            this.setAliases(new ArrayList<String>());
+        }
+
+        @Override
+        public boolean execute(CommandSender sender, String s, String[] strings) {
+            if(!(sender instanceof Player)){
+                sender.sendMessage(ChatColor.RED + "You need to be a player to use that command.");
+                return true;
+            }
+
+            if (!sender.hasPermission(this.getPermission())) {
+                sender.sendMessage(ChatColor.RED + "You don't have permission.");
+                return true;
+            }
+            ((Player) sender).chat(emoteMap.get(s.toLowerCase()));
+
+            return true;
+        }
+
+        @Override
+        public Plugin getPlugin() {
+            return APEmotes.this;
+        }
+    }
+
 }
 
 
