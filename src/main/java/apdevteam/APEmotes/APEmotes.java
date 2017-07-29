@@ -52,6 +52,10 @@ public class APEmotes extends JavaPlugin implements Listener {
         //config.addDefaults(emoteMap);
         config.options().copyDefaults(true);
         saveConfig();
+
+        emoteMap = new HashMap<>();
+        for(Map.Entry<String, Object> entry : config.getValues(false).entrySet())
+            emoteMap.put(entry.getKey(),"" + entry.getValue());
         loadCommands();
 
         //this.getConfig().set("")
