@@ -74,7 +74,7 @@ public class APEmotes extends JavaPlugin implements Listener {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         //Player player = (Player) sender;
-        if (command.getName().equalsIgnoreCase("emotes")) {
+        if (command.getName().equalsIgnoreCase("emotes") || command.getName().equalsIgnoreCase("emote")) {
             if (args.length == 0) {
                 sender.sendMessage("Please type in a command!");
                 return true;

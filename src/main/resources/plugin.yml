@@ -13,6 +13,7 @@ commands:
       description: Provides you with a link to the AP trading prices
    emotes:
       description: General add, remove, and reload emotes command
+      aliases: emote
      # usage: /emotes (add :emote: ASCII/remove :emote:/reload)
 permissions:
    emote.edit:
