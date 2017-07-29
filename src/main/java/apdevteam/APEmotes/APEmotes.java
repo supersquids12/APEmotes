@@ -2,6 +2,7 @@ package apdevteam.APEmotes;
 
 import apdevteam.APEmotes.tabCompletors.PlayerTabComplete;
 import apdevteam.APEmotes.tabCompletors.TabComplete;
+import apdevteam.APEmotes.utils.TopicPaginator;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -82,8 +83,8 @@ public class APEmotes extends JavaPlugin implements Listener {
                 sender.sendMessage("§6/emotes help§f: show this list");
                 sender.sendMessage("§6/emotes list <page>§f: list all emotes");
                 sender.sendMessage("§6/emotes reload§f: loads emotes from the config");
-                sender.sendMessage("§6/emotes save§f: saves emotes to the config");
                 sender.sendMessage("§6/emotes remove <key>§f: remove an emote");
+                sender.sendMessage("§6/emotes save§f: saves emotes to the config");
                 return true;
             }
             if (args[0].equalsIgnoreCase("add")) {
@@ -91,7 +92,7 @@ public class APEmotes extends JavaPlugin implements Listener {
                     sender.sendMessage(ChatColor.GREEN + "[Emotes]" + ChatColor.RED + " Insufficient permissions.");
                     return true;
                 }
-                if(args.length <2){
+                if(args.length <3){
                     sender.sendMessage(ChatColor.GREEN + "[Emotes]" + ChatColor.RED + " Improper format, use /emotes help.");
                     return true;
                 }
@@ -142,6 +143,31 @@ public class APEmotes extends JavaPlugin implements Listener {
                 saveConfig();
                 sender.sendMessage(ChatColor.GREEN + "[Emotes]" + ChatColor.YELLOW + " Configuration saved.");
                 return true;
+            }
+            if(args[0].equalsIgnoreCase("list")) {
+                Integer page;
+                try {
+                    if (args.length < 2)
+                        page = 1;
+                    else
+                        page = Integer.parseInt(args[1]);
+                }catch(NumberFormatException e){
+                    sender.sendMessage(ChatColor.GREEN + "[Emotes]" + ChatColor.RED + " Invalid page \"" + args[1] + "\"");
+                    return true;
+                }
+                TopicPaginator paginator = new TopicPaginator("Emotes");
+                for(Map.Entry<String,String> entry : emoteMap.entrySet())
+                    paginator.addLine("§6" + entry.getKey() + " §f- " + entry.getValue() );
+
+                if (!paginator.isInBounds(page)) {
+                    sender.sendMessage(ChatColor.GREEN + "[Emotes]" + ChatColor.RED + " Invalid page \"" + args[1] + "\"");
+                    return true;
+                }
+                for(String s : paginator.getPage(page))
+                    sender.sendMessage(s);
+
+                return true;
+
             }
             sender.sendMessage(ChatColor.GREEN + "[Emotes]" + ChatColor.RED + " Invalid command.");
             return true;
