@@ -1,16 +1,8 @@
 name: APEmoticons
 main: apdevteam.APEmotes.APEmotes
 version: 1.0
-author: [Foxtrot2400]
+authors: [Foxtrot2400, cccm5]
 commands:
-   tableflip:
-      description: Flips a table. (╯°□°）╯︵ ┻━┻
-   lenny:
-      description: ( ͡° ͜ʖ ͡°)
-   shrug:
-      description: Shrugs. ¯\_(ツ)_//¯
-   disapprove:
-      description: Disapproves. ಠ_ಠ
    map:
       description: Provides you with a link to the AP Territory map
    apmap:

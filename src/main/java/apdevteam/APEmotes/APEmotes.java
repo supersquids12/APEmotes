@@ -159,7 +159,7 @@ public class APEmotes extends JavaPlugin implements Listener {
             bukkitCommandMap.setAccessible(true);
             CommandMap commandMap = (CommandMap) bukkitCommandMap.get(Bukkit.getServer());
             for (String emote : emoteMap.keySet())
-                commandMap.register(emote, new EmoteCommand(emote));
+                commandMap.register("apemotes", new EmoteCommand(emote));
         } catch (IllegalAccessException | SecurityException | NoSuchFieldException | IllegalArgumentException e) {
             e.printStackTrace();
 
