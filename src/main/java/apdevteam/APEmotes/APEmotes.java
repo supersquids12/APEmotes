@@ -81,7 +81,8 @@ public class APEmotes extends JavaPlugin implements Listener {
                 sender.sendMessage("§6/emotes add <Key> <Result>§f: create a new emote");
                 sender.sendMessage("§6/emotes help§f: show this list");
                 sender.sendMessage("§6/emotes list <page>§f: list all emotes");
-                sender.sendMessage("§6/emotes reload§f: reload emotes from the config");
+                sender.sendMessage("§6/emotes reload§f: loads emotes from the config");
+                sender.sendMessage("§6/emotes save§f: saves emotes to the config");
                 sender.sendMessage("§6/emotes remove <key>§f: remove an emote");
                 return true;
             }
@@ -114,20 +115,27 @@ public class APEmotes extends JavaPlugin implements Listener {
                 //this.saveConfig();
                 return true;
             }
-            if (args[0].equalsIgnoreCase("reload")) {
+            if (args[0].equalsIgnoreCase("reload") || args[0].equalsIgnoreCase("load")) {
                 if (!sender.hasPermission("emote.edit")) {
                     sender.sendMessage(ChatColor.GREEN + "[Emotes]" + ChatColor.RED + " Insufficient permissions.");
                     return true;
                 }
                 this.reloadConfig();
-                this.saveConfig();
-                this.getConfig().options().copyDefaults(true);
-                for (Map.Entry<String, String> entry : emoteMap.entrySet()) {
-                    //  FileConfiguration config = this.getConfig();
-                    getConfig().set(entry.getKey(), entry.getValue());
-                }
-                //this.EmoteWords = (List<String>) this.getConfig().getList("EmoteWords");
+                emoteMap = new HashMap<>();
+                for(Map.Entry<String, Object> entry : getConfig().getValues(false).entrySet())
+                    emoteMap.put(entry.getKey(),"" + entry.getValue());
+                loadCommands();
                 sender.sendMessage(ChatColor.GREEN + "[Emotes]" + ChatColor.YELLOW + " Configuration reloaded.");
+                return true;
+            }
+            if(args[0].equalsIgnoreCase("save")){
+                if (!sender.hasPermission("emote.edit")) {
+                    sender.sendMessage(ChatColor.GREEN + "[Emotes]" + ChatColor.RED + " Insufficient permissions.");
+                    return true;
+                }
+                for (Map.Entry<String, String> entry : emoteMap.entrySet())
+                    getConfig().set(entry.getKey(), entry.getValue());
+                sender.sendMessage(ChatColor.GREEN + "[Emotes]" + ChatColor.YELLOW + " Configuration saved.");
                 return true;
             }
             sender.sendMessage(ChatColor.GREEN + "[Emotes]" + ChatColor.RED + " Invalid command.");
