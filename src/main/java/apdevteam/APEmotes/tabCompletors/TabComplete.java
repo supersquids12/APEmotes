@@ -16,6 +16,8 @@ public class TabComplete implements Listener{
     public void onTabCompleteEvent(TabCompleteEvent event){
         ArrayList<String> tabCompletions = new ArrayList<>(event.getCompletions());
         for (String emoteKey : plugin.getEmoteMap().keySet()) {
+            if(!event.getSender().hasPermission("StaffMode." + emoteKey))
+                continue;
             int emoteIndex = event.getBuffer().lastIndexOf(":");
             if(emoteIndex >= 0 && (":" + emoteKey).startsWith(event.getBuffer().substring(emoteIndex)))
                 tabCompletions.add(":" + emoteKey + ":");

@@ -14,6 +14,8 @@ public class PlayerTabComplete implements Listener{
     public void onPlayerTabCompleteEvent(PlayerChatTabCompleteEvent event){
 
         for (String emoteKey : plugin.getEmoteMap().keySet()) {
+            if(!event.getPlayer().hasPermission("StaffMode." + emoteKey))
+                continue;
             int emoteIndex = event.getChatMessage().lastIndexOf(":");
             if(emoteIndex >= 0 && (":"+emoteKey).startsWith(event.getChatMessage().substring(emoteIndex)))
                 event.getTabCompletions().add(":" + emoteKey + ":");
