@@ -16,10 +16,10 @@ public class TabComplete implements Listener{
     @EventHandler
     public void onTabCompleteEvent(TabCompleteEvent event){
         ArrayList<String> tabCompletions = new ArrayList<>(event.getCompletions());
-        for (Map.Entry<String,String> entry : emoteMap.entrySet()) {
-            int emoteIndex = event.getBuffer().lastIndexOf(entry.getKey().substring(0, 1));
-            if(emoteIndex >= 0 && entry.getKey().startsWith(event.getBuffer().substring(emoteIndex)))
-                tabCompletions.add(entry.getKey());
+        for (String emoteKey : emoteMap.keySet()) {
+            int emoteIndex = event.getBuffer().lastIndexOf(":");
+            if(emoteIndex >= 0 && (":" + emoteKey).startsWith(event.getBuffer().substring(emoteIndex)))
+                tabCompletions.add(":" + emoteKey + ":");
         }
         event.setCompletions(tabCompletions);
     }

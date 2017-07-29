@@ -44,10 +44,10 @@ public class APEmotes extends JavaPlugin implements Listener {
         this.getConfig().options().copyDefaults(true);
         //  this.EmoteWords = (List<String>) this.getConfig().getList("EmoteWords");
         FileConfiguration config = this.getConfig();
-        emoteMap.put(":tableflip:", "(╯°□°）╯︵ ┻━┻");
-        emoteMap.put(":shrug:", "¯\\_(ツ)_/¯");
-        emoteMap.put(":lenny:", "( ͡° ͜ʖ ͡°)");
-        emoteMap.put(":disapprove:", "ಠ_ಠ");
+        emoteMap.put("tableflip", "(╯°□°）╯︵ ┻━┻");
+        emoteMap.put("shrug", "¯\\_(ツ)_/¯");
+        emoteMap.put("lenny", "( ͡° ͜ʖ ͡°)");
+        emoteMap.put("disapprove", "ಠ_ಠ");
         //HashMap<String,String> emoteMap = new HashMap<>();
         for (HashMap.Entry<String, String> entry : emoteMap.entrySet()) {
             config.addDefault(entry.getKey(), entry.getValue());
@@ -143,7 +143,7 @@ public class APEmotes extends JavaPlugin implements Listener {
     public void onPlayerChat(AsyncPlayerChatEvent event) {
         String tempMessage = event.getMessage();
         for (Map.Entry<String, String> entry : emoteMap.entrySet()) {
-            tempMessage = tempMessage.replaceAll(entry.getKey(), entry.getValue());
+            tempMessage = tempMessage.replaceAll(":" + entry.getKey() + ":", entry.getValue());
         }
         event.setMessage(tempMessage);
     }

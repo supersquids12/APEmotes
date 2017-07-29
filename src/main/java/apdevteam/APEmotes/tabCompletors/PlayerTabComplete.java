@@ -15,10 +15,10 @@ public class PlayerTabComplete implements Listener{
     @EventHandler
     public void onPlayerTabCompleteEvent(PlayerChatTabCompleteEvent event){
 
-        for (Map.Entry<String,String> entry : emoteMap.entrySet()) {
-            int emoteIndex = event.getChatMessage().lastIndexOf(entry.getKey().substring(0, 1));
-            if(emoteIndex >= 0 && entry.getKey().startsWith(event.getChatMessage().substring(emoteIndex)))
-                event.getTabCompletions().add(entry.getKey());
+        for (String emoteKey : emoteMap.keySet()) {
+            int emoteIndex = event.getChatMessage().lastIndexOf(":");
+            if(emoteIndex >= 0 && (":"+emoteKey).startsWith(event.getChatMessage().substring(emoteIndex)))
+                event.getTabCompletions().add(":" + emoteKey + ":");
         }
     }
 }
