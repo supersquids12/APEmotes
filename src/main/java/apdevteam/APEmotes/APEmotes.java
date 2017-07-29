@@ -96,16 +96,8 @@ public class APEmotes extends JavaPlugin implements Listener {
                     sender.sendMessage(ChatColor.GREEN + "[Emotes]" + ChatColor.RED + " Improper format, use /emotes help.");
                     return true;
                 }
-                getConfig().createSection(args[0].toLowerCase());
-//                FileConfiguration config = this.getConfig();
                 emoteMap.put(args[1], args[2]);
-//                for (Map.Entry<String, String> entry : emoteMap.entrySet()) {
-//                    config.addDefault(entry.getKey(), entry.getValue());
-//                }
                 sender.sendMessage(" Added emote " + args[1] + " with text " + args[2]);
-//                config.options().copyDefaults(true);
-
-//                this.saveConfig();
                 return true;
             }
             if (args[0].equalsIgnoreCase("remove")) {
