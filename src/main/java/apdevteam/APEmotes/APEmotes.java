@@ -25,9 +25,6 @@ import java.util.Map;
 
 
 
-/**
- * Created by Foxtrot2400 on 7/6/17.
- */
 public class APEmotes extends JavaPlugin implements Listener {
     //public List<String> EmoteWords;
     private HashMap<String, String> emoteMap = new HashMap<>();
