@@ -32,9 +32,8 @@ public class TopicPaginator {
             throw new IndexOutOfBoundsException("Page number " + pageNumber + " exceeds bounds <" + 1 + "," + getPageCount() + ">");
         String[] tempLines = new String[lines.size() < pageNumber * (CLOSED_CHAT_PAGE_HEIGHT-1)  ? lines.size()%CLOSED_CHAT_PAGE_HEIGHT : CLOSED_CHAT_PAGE_HEIGHT-1];
         tempLines[0] = "§e§l--- §r§6" + title +"§e§l-- §r§6page §c" + pageNumber + "§e/§c" + getPageCount() + " §e§l---";
-        for(int i = 1; i< tempLines.length; i++){
-            Bukkit.getLogger().info("" + i);
-            tempLines[i] = lines.get(((CLOSED_CHAT_PAGE_HEIGHT-1) * (pageNumber-1)) + i);
+        for(int i = 0; i< tempLines.length; i++){
+            tempLines[i+1] = lines.get(((CLOSED_CHAT_PAGE_HEIGHT-1) * (pageNumber-1)) + i);
         }
         return tempLines;
     }
@@ -44,7 +43,6 @@ public class TopicPaginator {
     }
 
     public boolean isInBounds(int pageNumber){
-        Bukkit.getLogger().info("total pages: " + getPageCount() + " input: " + pageNumber);
         return pageNumber > 0 && pageNumber <= getPageCount();
     }
 }

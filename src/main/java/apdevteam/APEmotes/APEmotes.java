@@ -102,7 +102,6 @@ public class APEmotes extends JavaPlugin implements Listener {
 //                for (Map.Entry<String, String> entry : emoteMap.entrySet()) {
 //                    config.addDefault(entry.getKey(), entry.getValue());
 //                }
-                getLogger().info("arg 1: " + args[1] + " arg 2: " + args[2]);
                 sender.sendMessage(" Added emote " + args[1] + " with text " + args[2]);
 //                config.options().copyDefaults(true);
 
