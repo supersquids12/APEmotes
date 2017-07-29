@@ -179,6 +179,8 @@ public class APEmotes extends JavaPlugin implements Listener {
     public void onPlayerChat(AsyncPlayerChatEvent event) {
         String tempMessage = event.getMessage();
         for (Map.Entry<String, String> entry : emoteMap.entrySet()) {
+            if(!event.getPlayer().hasPermission("StaffMode." + entry.getKey()))
+                continue;
             tempMessage = tempMessage.replaceAll(":" + entry.getKey() + ":", entry.getValue());
         }
         event.setMessage(tempMessage);
