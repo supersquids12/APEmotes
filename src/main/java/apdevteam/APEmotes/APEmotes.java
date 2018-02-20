@@ -183,6 +183,16 @@ public class APEmotes extends JavaPlugin implements Listener {
                 continue;
             tempMessage = tempMessage.replaceAll(":" + entry.getKey() + ":", entry.getValue());
         }
+        int myLength = tempmessage.length();
+        for(int i=0;i<myLength;i++){
+            // converting substring to char
+            char see = tempmessage.substring(i,i+1).charAt(0);
+            if(see == ((char)92)){
+                // replace any '\\' or 'fake \' with ((char)92)
+            tempmessage = tempmessage.substring(0,i) + ((char)92) +
+                    tempmessage.substring(i+1,myLength);
+            }        
+        }
         event.setMessage(tempMessage);
     }
 
