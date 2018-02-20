@@ -182,9 +182,8 @@ public class APEmotes extends JavaPlugin implements Listener {
             if(!event.getPlayer().hasPermission("StaffMode." + entry.getKey()))
                 continue;
             tempMessage = tempMessage.replaceAll(":" + entry.getKey() + ":", entry.getValue());
-        }
-        int myLength = tempmessage.length();
-        for(int i=0;i<myLength;i++){
+            int myLength = tempmessage.length();
+            for(int i=0;i<myLength;i++){
             // converting substring to char
             char see = tempmessage.substring(i,i+1).charAt(0);
             if(see == ((char)92)){
@@ -192,6 +191,7 @@ public class APEmotes extends JavaPlugin implements Listener {
             tempmessage = tempmessage.substring(0,i) + ((char)92) +
                     tempmessage.substring(i+1,myLength);
             }        
+        }
         }
         event.setMessage(tempMessage);
     }
